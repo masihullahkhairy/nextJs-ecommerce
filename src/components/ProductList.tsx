@@ -1,6 +1,11 @@
+"use client";
+
 import { ProductsType } from "@/types";
 import Categories from "./Categories";
 import ProductCard from "./ProductCard";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import Filter from "./Filter";
 
 // TEMPORARY
 const products: ProductsType = [
@@ -114,15 +119,34 @@ const products: ProductsType = [
   },
 ];
 
-const ProductList = () => {
+const ProductList = ({
+  category,
+  param,
+}: {
+  category: string;
+  param: string;
+}) => {
+  const searchParams = useSearchParams();
+
+  const selectedCategory = searchParams.get("category");
+
   return (
     <div className="w-full">
       <Categories />
+      {param == "products" && <Filter/> }
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+      {param == "homepage" && (
+        <Link
+          href={category ? `/products/?category=${category}` : "/products"}
+          className="flex justify-center mt-4 underline text-sm text-gray-500"
+        >
+          View all products
+        </Link>
+      )}
     </div>
   );
 };
