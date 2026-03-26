@@ -3,7 +3,6 @@
 import { ProductsType } from "@/types";
 import Categories from "./Categories";
 import ProductCard from "./ProductCard";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Filter from "./Filter";
 
@@ -126,9 +125,6 @@ const ProductList = ({
   category: string;
   param: string;
 }) => {
-  const searchParams = useSearchParams();
-
-  const selectedCategory = searchParams.get("category");
 
   return (
     <div className="w-full">
